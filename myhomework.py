@@ -1,5 +1,8 @@
 import sys
 from pathlib import Path
+import os
+import zipfile
+import tarfile
 
 CATEGORIES = {'audio': ['.mp3', '.aiff'],
               'image': ['.png', '.jpg']}
@@ -51,3 +54,23 @@ def main():
     
 if __name__ == "__main__":
     print(main())
+    
+def unpack_archives(src_folder):
+    archive_folder = os.path.join(src_folder, "archives")
+    if not os.path.exists(archive_folder):
+        return
+
+    for filename in os.listdir(archive_folder):
+        file_path = os.path.join(archive_folder, filename)
+
+        if filename.endswith(".zip"):
+            with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                zip_ref.extractall(src_folder)
+        elif filename.endswith(".tar.gz") or filename.endswith(".tgz"):
+            with tarfile.open(file_path, 'r:gz') as tar_ref:
+                tar_ref.extractall(src_folder)
+        elif filename.endswith(".tar"):
+            with tarfile.open(file_path, 'r') as tar_ref:
+                tar_ref.extractall(src_folder)
+
+        os.remove(file_path)
