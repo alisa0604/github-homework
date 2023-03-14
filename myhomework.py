@@ -39,22 +39,7 @@ def sort_dir(root_dir:Path, current_dir):
         else:
             sort_dir(item)
             item.rmdir()
-def main():
-    try:
-        path = Path(sys.argv[1])
-    except IndexError:
-        return f'No path to folder. Take as parametr'
-    
-    if not path.exists():
-        return "Sorry, folder not exist"
-    
-    sort_dir(path, path)
-
-    return "Everything is ok"
-    
-if __name__ == "__main__":
-    print(main())
-    
+            
 def unpack_archives(src_folder):
     archive_folder = os.path.join(src_folder, "archives")
     if not os.path.exists(archive_folder):
@@ -74,3 +59,20 @@ def unpack_archives(src_folder):
                 tar_ref.extractall(src_folder)
 
         os.remove(file_path)
+
+def main():
+    try:
+        path = Path(sys.argv[1])
+    except IndexError:
+        return f'No path to folder. Take as parametr'
+    
+    if not path.exists():
+        return "Sorry, folder not exist"
+    
+    sort_dir(path, path)
+
+    return "Everything is ok"
+    
+if __name__ == "__main__":
+    print(main())
+    
