@@ -14,9 +14,9 @@ class Phone(Field):
         super().__init__(value)
 
 class Record:
-    def __init__(self, name):
-        self.name = Name(name)
-        self.phones = []
+    def __init__(self, name:Name, phone:Phone=None):
+        self.name = name
+        self.phones = [phone] if phone else None
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
