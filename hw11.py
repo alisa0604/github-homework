@@ -13,6 +13,15 @@ class Phone(Field):
         super().__init__(value)
         self.value = self.process(value)
 
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        processed_value = self.process(new_value)
+        self._value = processed_value
+
     def process(self, value):
         phone_pattern = re.compile(r'^\+?(\d{2,3})?\s*\(*(\d{3})\)*[\.\-\s]*(\d{3})[\.\-\s]*(\d{2})[\.\-\s]*(\d{2})$')
         if not phone_pattern.match(value):
